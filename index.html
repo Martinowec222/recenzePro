@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>recenzePro.cz — Weby, SEO, reklama a Google recenze</title>
 <meta name="description" content="Digitální agentura recenzePro: tvorba webů, SEO, správa Google Ads a NFC/QR karty pro Google recenze. Pomáháme českým firmám růst online.">
-<meta property="og:title" content="recenzePro.cz - Weby, SEO, reklama a Google recenze">
+<meta property="og:title" content="recenzePro.cz — Weby, SEO, reklama a Google recenze">
 <meta property="og:description" content="Web, marketing a recenze pod jednou střechou. Pomáháme českým firmám růst online.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://www.recenzepro.cz/">
@@ -51,6 +51,7 @@
     font-size: 16px;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
   
   img { max-width: 100%; display: block; }
@@ -603,6 +604,19 @@
     .hero-tiles, .steps, .trust-grid { grid-template-columns: 1fr; }
     .product-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
+
+    /* Hero image was fixed at min-height:320px, too tall on narrow phones */
+    .hero-image { min-height: 0; aspect-ratio: 4 / 3; }
+
+    /* Stamp badge overflowed past the container edge (left:-28px), causing
+       horizontal scroll on phones. Pull it fully inside on small screens. */
+    .stamp {
+      width: 92px;
+      height: 92px;
+      left: 8px;
+      bottom: -14px;
+    }
+    .stamp svg { width: 100%; height: 100%; }
   }
 
   /* Mobile nav — open state (JS toggles body.nav-open) */
@@ -644,11 +658,11 @@
 <!-- ============ HEADER ============ -->
 <header class="site-header">
   <div class="container header-inner">
-    <a href="index.html" class="logo">recenze<span>Pro</span></a>
+    <a href="main.html" class="logo">recenze<span>Pro</span></a>
 
     <nav class="main-nav" id="mainNav" aria-label="Hlavní navigace">
       <ul>
-        <li><a href="index.html">Domů</a></li>
+        <li><a href="main.html">Domů</a></li>
         <li><a href="nabidka.html">Nabídka</a></li>
         <li><a href="blog.html">Blog</a></li>
         <li><a href="blog.html#post-2">O nás</a></li>
@@ -676,7 +690,7 @@
   <section class="hero">
     <div class="container hero-inner">
       <div class="hero-copy">
-        <p class="eyebrow">Weby · SEO · Marketing · Recenze</p>
+        <p class="eyebrow">Weby · SEO · Reklama · Recenze</p>
         <h1>Digitální agentura pro firmy, co chtějí růst.</h1>
         <p class="hero-lead">
           Postavíme vám web, přivedeme zákazníky a postaráme se, aby vás našli a ohodnotili.
@@ -697,7 +711,7 @@
             <circle cx="80" cy="80" r="62" fill="none" stroke="currentColor" stroke-width="1"/>
             <path id="stampCircle" fill="none" d="M 80,80 m -68,0 a 68,68 0 1,1 136,0 a 68,68 0 1,1 -136,0"/>
             <text font-size="10.5" letter-spacing="3" fill="currentColor">
-              <textPath href="#stampCircle" startOffset="2%">SPOKOJENOST · GOOGLE RECENZE · LEPŠÍ WEBY ·</textPath>
+              <textPath href="#stampCircle" startOffset="2%">SPOKOJENOST · GOOGLE RECENZE · LEPŠÍ WEB ·</textPath>
             </text>
             <text x="80" y="90" text-anchor="middle" font-size="26" fill="currentColor">★★★★★</text>
           </svg>
@@ -729,7 +743,7 @@
     <div class="container welcome-inner">
       <h2>Vítejte u recenzePro</h2>
       <p>
-        Jsme digitální agentura, která pomáhá českým firmám růst online. Postavíme vám web, nastavíme SEO, Google Ads a doplníme NFC/QR karty. Budeme monitorovat výsledky a upravovat dle potřeby, vše na míru a bez zbytečných komplikací.
+        Jsme digitální agentura, která pomáhá českým firmám růst online. Postavíme vám web, nastavíme SEO, Google Ads a doplníme NFC/QR karty, díky kterým získáte více Google recenzí, vše na míru a bez zbytečných komplikací.
       </p>
     </div>
   </section>
@@ -816,7 +830,7 @@
         </details>
         <details class="faq-item">
           <summary>Zahrnuje web i SEO?</summary>
-          <p>Základní SEO je součástí každého webu, pokročilejší optimalizaci (klíčová slova, širší blog, detailní obsah) nabízíme jako samostatnou službu nebo balíček.</p>
+          <p>Základní SEO je součástí každého webu, pokročilejší optimalizaci (klíčová slova, blog, obsah) nabízíme jako samostatnou službu nebo balíček.</p>
         </details>
         <details class="faq-item">
           <summary>Funguje NFC/QR recenzní kartička na všech telefonech?</summary>
@@ -825,10 +839,6 @@
         <details class="faq-item">
           <summary>Je nutné platit měsíčně?</summary>
           <p>Ne, weby a karty se platí jednorázově; měsíční platby jsou jen pokud si vyberete průběžnou správu/marketing.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Jaká je cena za konzultaci?</summary>
-          <p>Online konzultace je zcela zdarma. 😊</p>
         </details>
       </div>
     </div>
@@ -850,13 +860,11 @@
         <a href="https://strojparts.cz" target="_blank" rel="noopener" class="partner-logo">
   	  <img loading="lazy" src="static/strojparts.png" alt="StrojParts">
 	</a>
-        <a href="https://dialect.cz/cs/dialect/" target="_blank" rel="noopener" class="partner-logo">
-  	  <img loading="lazy" src="static/dialect.png" alt="Dialect">
-	</a>
-        <a href="https://www.svetbezlepku.cz/" target="_blank" rel="noopener" class="partner-logo">
+        <div class="partner-logo placeholder-block" data-placeholder="Logo partnera 4"><span>DodavkyG</span></div>
+        <a href="https://svetbezlepku.cz" target="_blank" rel="noopener" class="partner-logo">
   	  <img loading="lazy" src="static/sbl.png" alt="Svět bez lepku">
 	</a>
-
+        <div class="partner-logo placeholder-block" data-placeholder="Logo partnera 6"><span>LOGO</span></div>
         <!-- duplicated for seamless loop -->
         <a href="https://risklot.com" target="_blank" rel="noopener" class="partner-logo">
   	  <img loading="lazy" src="static/risklot.png" alt="RiskLot">
@@ -867,13 +875,11 @@
         <a href="https://strojparts.cz" target="_blank" rel="noopener" class="partner-logo">
   	  <img loading="lazy" src="static/strojparts.png" alt="StrojParts">
 	</a>
-        <a href="https://dialect.cz/cs/dialect/" target="_blank" rel="noopener" class="partner-logo">
-  	  <img loading="lazy" src="static/dialect.png" alt="Dialect">
-	</a>
-        <a href="https://www.svetbezlepku.cz/" target="_blank" rel="noopener" class="partner-logo">
+        <div class="partner-logo placeholder-block" aria-hidden="true"><span>DodavkyG</span></div>
+        <a href="https://svetbezlepku.cz" target="_blank" rel="noopener" class="partner-logo">
   	  <img loading="lazy" src="static/sbl.png" alt="Svět bez lepku">
 	</a>
-
+        <div class="partner-logo placeholder-block" aria-hidden="true"><span>LOGO</span></div>
       </div>
     </div>
   </section>
@@ -907,7 +913,7 @@
   <div class="container footer-grid">
 
     <div class="footer-col footer-brand">
-      <a href="index.html" class="logo logo--footer">recenze<span>Pro</span></a>
+      <a href="main.html" class="logo logo--footer">recenze<span>Pro</span></a>
       <p>Weby, SEO, Marketing a mnohem více...</p>
     </div>
 
