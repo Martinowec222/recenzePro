@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — recenzePro.cz | Novinky, tipy a případové studie</title>
+<meta name="description" content="Novinky, tipy a případové studie recenzePro: jak funguje náš zákaznický servis, kdo jsme a jak jsme postavili projekty pro naše klienty.">
+<meta property="og:title" content="Blog — recenzePro.cz">
+<meta property="og:description" content="Novinky, tipy a případové studie ze světa tvorby webů, SEO a Google recenzí.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://www.recenzepro.cz/blog.html">
+<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+<link rel="alternate icon" href="favicon/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+<link rel="manifest" href="favicon/site.webmanifest">
+<meta name="theme-color" content="#1F3A2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* =========================================================
+   recenzePro.cz — design tokens
+   ========================================================= */
+  :root {
+    --bg: #F0F4EC;
+    --surface: #FFFFFF;
+    --ink: #1C2E22;
+    --ink-soft: #435049;
+    --forest: #1F3A2E;
+    --forest-dark: #142720;
+    --gold: #B8863B;
+    --gold-light: #E7C989;
+    --line: rgba(28, 46, 34, 0.12);
+
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+
+    --container: 1200px;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; display: block; }
+
+  .container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    color: var(--forest-dark);
+    line-height: 1.15;
+    margin: 0 0 0.5em;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  /* Placeholder blocks */
+  .placeholder-block {
+    background: repeating-linear-gradient(
+      135deg,
+      rgba(31,58,46,0.06),
+      rgba(31,58,46,0.06) 10px,
+      rgba(31,58,46,0.1) 10px,
+      rgba(31,58,46,0.1) 20px
+    );
+    border: 1px dashed rgba(31,58,46,0.35);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--forest);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    min-height: 120px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  /* "Pop up" hover efekt na dlaždicích s obrázky */
+  .mini-tile:hover,
+  .partner-logo:hover {
+    transform: scale(1.035) translateY(-3px);
+    box-shadow: 0 10px 24px rgba(28,46,34,0.18);
+  }
+  .product-card:hover .product-image {
+    transform: scale(1.035) translateY(-3px);
+    box-shadow: 0 10px 24px rgba(28,46,34,0.18);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1.5px solid transparent;
+    transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+
+  .btn-primary {
+    background: var(--forest);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--forest-dark); }
+
+  .btn-ghost {
+    border-color: var(--forest);
+    color: var(--forest);
+  }
+  .btn-ghost:hover { background: var(--forest); color: #fff; }
+
+  .btn-outline {
+    border-color: var(--line);
+    color: var(--forest);
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: 100%;
+    justify-content: center;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* =========================================================
+     Header
+     ========================================================= */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--forest-dark);
+    white-space: nowrap;
+  }
+  .logo span { color: var(--gold); }
+
+  .main-nav { flex: 1; }
+  .main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+  }
+  .main-nav a {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .main-nav a:hover {
+    color: var(--forest);
+    background-color: rgba(31, 58, 46, 0.08);
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin: -4px -8px;
+  }
+  .main-nav a[aria-current="page"] {
+    color: var(--forest);
+    font-weight: 700;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .icon-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    position: relative;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .icon-link:hover {
+    color: var(--forest);
+    background-color: rgba(31, 58, 46, 0.08);
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin: -4px -8px;
+  }
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    left: 14px;
+    background: var(--gold);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+  }
+  .nav-toggle span {
+    width: 22px;
+    height: 2px;
+    background: var(--forest-dark);
+  }
+
+  /* =========================================================
+     Catalog page intro
+     ========================================================= */
+  .catalog-intro { padding: 56px 0 40px; text-align: center; }
+  .catalog-intro .eyebrow {
+    display: flex;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 14px;
+  }
+  .catalog-intro h1 { font-size: clamp(2rem, 3.5vw, 2.8rem); }
+  .catalog-intro p {
+    color: var(--ink-soft);
+    max-width: 60ch;
+    margin: 0 auto;
+    font-size: 1.05rem;
+  }
+
+  /* =========================================================
+     ARTICLE CARDS
+     ========================================================= */
+  .article-card {
+      background: rgba(245,245,245,0.93);
+      border: 3px solid #0f172a;
+      border-radius: 14px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.15);
+      overflow: hidden;
+      margin: 0 auto 2.5rem;
+      max-width: 760px;
+  }
+   
+  .article-header {
+      padding: 2rem 2.2rem 1.2rem;
+      border-bottom: 1.5px solid rgba(0,0,0,0.08);
+  }
+   
+  .post-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 3px 12px;
+      margin-bottom: 10px;
+  }
+  .tag-blue   { background: rgba(184, 134, 59, 0.16); color: var(--forest-dark); }
+   
+  .article-title {
+      font-family: var(--font-display), Georgia, serif;
+      font-size: clamp(1.3rem, 3vw, 1.75rem);
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 0.4rem;
+      color: #0f172a;
+  }
+   
+  .article-meta {
+      font-size: 0.82rem;
+      color: #64748b;
+      margin-bottom: 0;
+  }
+   
+  .article-body {
+      padding: 0 2.2rem 2rem;
+      font-size: 1.05rem;
+      line-height: 1.78;
+      color: #1e293b;
+  }
+   
+  .article-body h3 {
+      font-family: var(--font-display), serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 1.8rem 0 0.6rem;
+      color: #0f172a;
+  }
+
+  /* =========================================================
+     Trust bar
+     ========================================================= */
+  .trust-bar { padding: 48px 0 72px; }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    color: var(--forest);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  /* =========================================================
+     Footer
+     ========================================================= */
+  .site-footer {
+    background: var(--forest-dark);
+    color: rgba(255,255,255,0.85);
+    padding-top: 56px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 32px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .footer-brand p { color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 12px; }
+  .logo--footer { color: #fff; }
+  .logo--footer span { color: var(--gold-light); }
+
+  .footer-col h4 {
+    font-family: var(--font-body);
+    color: #fff;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+  .footer-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+  }
+  .footer-list a {
+    display: inline-block;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .footer-list a:hover {
+    color: var(--gold-light);
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin: -4px -8px;
+  }
+
+  .payment-icons { display: flex; flex-wrap: wrap; gap: 8px; }
+  .payment-chip {
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .footer-bottom {
+    padding: 20px 24px;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+  }
+
+  /* Offset anchor targets so the sticky header doesn't cover them */
+  #kontakt { scroll-margin-top: 100px; }
+
+  /* =========================================================
+     Responsive
+     ========================================================= */
+  @media (max-width: 960px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .product-grid--catalog { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 720px) {
+    .main-nav { display: none; }
+    .nav-toggle { display: flex; }
+    .trust-grid { grid-template-columns: 1fr; }
+    .product-grid { grid-template-columns: 1fr; }
+    .product-grid--catalog { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+
+    /* Cart stays visible in the header row itself, not tucked inside the
+       hamburger menu — people should see their cart count at a glance. */
+    .header-actions { display: flex; margin-left: auto; }
+    .header-actions .icon-link span:not(.cart-count) { display: none; }
+  }
+
+  /* Mobile nav — open state (JS toggles body.nav-open) */
+  @media (max-width: 720px) {
+    body.nav-open .header-inner { flex-wrap: wrap; }
+    body.nav-open .main-nav {
+      display: block;
+      order: 3;
+      width: 100%;
+    }
+    body.nav-open .main-nav ul {
+      flex-direction: column;
+      gap: 2px;
+      padding: 12px 0 4px;
+    }
+    body.nav-open .main-nav a {
+      display: block;
+      padding: 10px 4px;
+    }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .nav-toggle span { transition: transform 0.15s ease, opacity 0.15s ease; }
+  }
+</style>
+
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">recenze<span>Pro</span></a>
+
+    <nav class="main-nav" id="mainNav" aria-label="Hlavní navigace">
+      <ul>
+        <li><a href="index.html">Domů</a></li>
+        <li><a href="nabidka.html">Nabídka</a></li>
+        <li><a href="blog.html" aria-current="page">Blog</a></li>
+        <li><a href="blog.html#post-2">O nás</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="kosik.html" class="icon-link cart-link" aria-label="Košík">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 4h2l1.8 11.2a2 2 0 0 0 2 1.8h8.4a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9.5" cy="20" r="1.1"/><circle cx="17" cy="20" r="1.1"/></svg>
+        <span>Košík</span>
+        <span class="cart-count">0</span>
+      </a>
+    </div>
+
+    <button class="nav-toggle" aria-label="Otevřít menu" aria-expanded="false" aria-controls="mainNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ PAGE INTRO / H1 ============ -->
+  <section class="catalog-intro">
+    <div class="container">
+      <p class="eyebrow">Blog</p>
+      <h1>Novinky, tipy a případové studie recenzePro</h1>
+      <p>Čtěte o tom, jak fungujeme, jak řešíme reklamace a podporu, a jak vypadají konkrétní projekty, na kterých jsme pracovali.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- POST 1: Zákaznický servis           -->
+  <!-- ============================================================ -->
+  <div class="wrap">
+  <article class="article-card" id="post-1"
+            itemscope itemtype="https://schema.org/BlogPosting">
+      <meta itemprop="author" content="RecenzePro">
+      <meta itemprop="datePublished" content="2026-06-27">
+   
+      <div class="article-header">
+          <span class="post-tag tag-blue">Zákaznický servis</span>
+          <h2 class="article-title" itemprop="headline">Jak funguje náš zákaznický servis</h2>
+          <p class="article-meta">Autor: RecenzePro &nbsp;-&nbsp; Červenec 12, 2026 &nbsp;-&nbsp; 6 minut</p>
+      </div>
+   
+      <div class="article-body" itemprop="articleBody">
+  
+          <h3>Kdy a jak se nám ozvat</h3>
+          <p>Ať už řešíte technický problém na webu, chcete upravit text na stránce, nebo se jen ptáte, jak si stojí vaše Google recenze, napište nám na recenzepro@email.cz nebo zavolejte na +420 777 468 522. Na dotazy reagujeme do 24 hodin v pracovní dny, u akutních výpadků webu se snažíme ozvat prakticky obratem.</p>
+          <p>Nepoužíváme automatizované chatboty ani přepojování mezi odděleními, komunikujete přímo s někým, kdo zná váš projekt a ví, o čem mluvíte. Pokud si nejste jistí, kam se váš dotaz řadí (technická podpora, fakturace, nová objednávka), stačí napsat na hlavní e-mail, přesměrujeme to na správné místo my.</p>
+   
+          <h3>Reklamace, vrácení a záruka</h3>
+          <p>Na dokončené weby a e-shopy poskytujeme 30denní záruční lhůtu, pokud v ní narazíte na chybu způsobenou naší prací, opravíme ji zdarma. U NFC/QR kartiček platí totéž: máte 30 dní na vrácení, pokud produkt neodpovídá objednávce nebo dorazí poškozený.</p>
+          <p>Reklamaci stačí poslat e-mailem na recenzepro@email.cz s popisem problému a číslem objednávky (případně odkazem na web). Ozveme se s dalším postupem do 24 hodin. Podrobnosti najdete i v sekci <strong><a href="index.html#kontakt">Kontakt</a></strong> v patičce webu.</p>
+   
+      </div>
+  </article>
+  
+  <!-- ============================================================ -->
+  <!-- POST 2: O nás           -->
+  <!-- ============================================================ -->
+  <article class="article-card" id="post-2"
+            itemscope itemtype="https://schema.org/BlogPosting">
+      <meta itemprop="author" content="RecenzePro">
+      <meta itemprop="datePublished" content="2026-06-27">
+ 
+      <div class="article-header">
+          <span class="post-tag tag-blue">O nás</span>
+          <h2 class="article-title" itemprop="headline">O nás</h2>
+          <p class="article-meta">Autor: RecenzePro &nbsp;-&nbsp; Červenec 12, 2026 &nbsp;-&nbsp; 6 minut</p>
+      </div>
+ 
+      <div class="article-body" itemprop="articleBody">
+
+          <h3>Kdo jsme</h3>
+          <p>RecenzePro je digitální agentura, která vznikla z jednoduché myšlenky: malé a střední firmy v Česku by neměly muset skládat web, marketing a online reputaci z pěti různých dodavatelů. Postavíme vám web, nastavíme SEO a reklamu a doplníme NFC/QR kartičky, díky kterým vám spokojení zákazníci nechají recenzi během pár vteřin, vše pod jednou střechou a bez zbytečné administrativy.</p>
+          <p>Nejsme obří agentura s desítkami klientů na jednoho projektového manažera. Pracujeme s menším počtem firem najednou, abychom měli čas rozumět tomu, co skutečně děláte, a navrhnout řešení, které vám pomůže růst, ne jen "web, protože se sluší ho mít".</p>
+ 
+          <h3>Jak pracujeme</h3>
+          <p>Každou spolupráci začínáme konzultací, ve které probereme váš byznys, cíle a to, co vám aktuálně nejvíc chybí, ať už je to nový web, lepší viditelnost na Googlu, nebo prostě víc recenzí od zákazníků. Na základě toho navrhneme řešení na míru a rovnou ho uvedeme do provozu, obvykle v řádu dní, ne měsíců.</p>
+          <p>Po spuštění vás neopouštíme. Sledujeme výsledky, hlídáme, jestli web plní svůj účel, a doporučíme další kroky, pokud vidíme prostor pro zlepšení. Pokud si chcete prohlédnout, co konkrétně nabízíme, mrkněte na naši <strong><a href="nabidka.html">stránku s nabídkou</a></strong>, nebo nás rovnou <strong><a href="#kontakt">kontaktujte</a></strong>.</p>
+ 
+      </div>
+  </article>
+
+  <!-- ============================================================ -->
+  <!-- POST 3: Případová studie — RiskLot           -->
+  <!-- ============================================================ -->
+  <article class="article-card" id="post-3"
+            itemscope itemtype="https://schema.org/BlogPosting">
+      <meta itemprop="author" content="RecenzePro">
+      <meta itemprop="datePublished" content="2026-07-15">
+
+      <div class="article-header">
+          <span class="post-tag tag-blue">Případová studie</span>
+          <h2 class="article-title" itemprop="headline">Jak jsme postavili finanční web pro RiskLot</h2>
+          <p class="article-meta">Autor: RecenzePro &nbsp;-&nbsp; Červenec 15, 2026 &nbsp;-&nbsp; 5 minut</p>
+      </div>
+
+      <div class="article-body" itemprop="articleBody">
+
+          <h3>O projektu</h3>
+          <p><strong><a href="https://risklot.com" target="_blank" rel="noopener">RiskLot</a></strong> je sada přehledných finančních kalkulaček pro investory a obchodníky, od výpočtu velikosti pozice a složeného úročení přes spořicí cíle až po <strong><a href="https://risklot.com/fire" target="_blank" rel="noopener">FIRE kalkulačku</a></strong> a vizualizaci splácení dluhu. Cílem projektu bylo nabídnout rychlé, transparentní nástroje bez reklam, placených zdí a matoucích vzorců, kterými jsou přeplněné jiné weby v oboru.</p>
+          <p>Šlo o typický případ, kdy dobrý nápad a užitečný obsah potřeboval web, který nebude zpomalovat ani mást. Stránka má jasnou navigaci mezi jednotlivými kalkulačkami, srozumitelné FAQ a rychlé načítání i na mobilu.</p>
+
+          <h3>Co jsme řešili (Mix + SEO)</h3>
+          <p>Pro RiskLot jsme zvolili balíček Mix + SEO. Postavili jsme rozsáhlý web s přehledným menu, kde se uživatel během pár vteřin dostane přesně k té kalkulačce, kterou hledá, ať už jde o <strong><a href="https://risklot.com/p.calculator" target="_blank" rel="noopener">Position Size Calculator</a></strong> pro obchodníky, nebo <strong><a href="https://risklot.com/s.calculator" target="_blank" rel="noopener">Savings Goal Calculator</a></strong> pro dlouhodobé spoření.</p>
+          <p>Součástí byla i SEO optimalizace zaměřená na konkrétní klíčová slova z oblasti investování a osobních financí, doplněná o sekci častých otázek, která pomáhá webu lépe se zobrazovat na Googlu a zároveň dává návštěvníkům rychlé odpovědi bez zbytečného scrollování.</p>
+          <p>Speciální část tohoto webu spočívala v jeho kalkulačkách, které běží na jazyce Python v backendu.</p>
+          <p>Pokud řešíte podobný projekt, web postavený kolem jasné myšlenky, který má být rychlý, přehledný a dobře dohledatelný, mrkněte na naši <strong><a href="nabidka.html">nabídku</a></strong>, nebo nás <strong><a href="blog.html#kontakt">kontaktujte</a></strong>.</p>
+
+      </div>
+  </article>
+ 
+  <!-- ============ TRUST BAR ============ -->
+  <section class="trust-bar">
+    <div class="container trust-grid">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16v11H8l-4 4V5Z"/><path d="M8 10h8M8 13h5"/></svg>
+        <span>Nezávazná konzultace zdarma</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2h9l5 5v15H6V2Z"/><path d="M15 2v5h5"/><path d="M9 13h7M9 17h7M9 9h3"/></svg>
+        <span>Transparentní ceny, žádné poplatky navíc</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+        <span>Individuální přístup ke každému projektu</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 3.5 7v5c0 5 3.6 8.4 8.5 9 4.9-.6 8.5-4 8.5-9V7L12 3Z"/></svg>
+        <span>Podpora do 24 hodin</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+
+    <div class="footer-col footer-brand">
+      <a href="index.html" class="logo logo--footer">recenze<span>Pro</span></a>
+      <p>Weby, SEO, Marketing a mnohem více...</p>
+    </div>
+
+    <div class="footer-col" id="kontakt">
+      <h4>Kontakt</h4>
+      <ul class="footer-list">
+        <li><a href="mailto:recenzepro@email.cz">recenzepro@email.cz</a></li>
+	<li><a href="tel:+420777468522">+420 777 468 522</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Rychlé odkazy</h4>
+      <ul class="footer-list">
+        <li><a href="blog.html">Obchodní podmínky</a></li>
+        <li><a href="blog.html">Ochrana osobních údajů</a></li>
+        <li><a href="blog.html">Reklamace a vrácení</a></li>
+        <li><a href="blog.html">Kontakt</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Platební metody</h4>
+      <div class="payment-icons">
+        <span class="payment-chip">Karta</span>
+        <span class="payment-chip">Bankovní převod</span>
+        <span class="payment-chip">Apple Pay</span>
+        <span class="payment-chip">Google Pay</span>
+     	<span class="payment-chip">Bitcoin</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container footer-bottom">
+    <p>&copy; 2026 recenzePro.cz - Všechna práva vyhrazena.</p>
+  </div>
+</footer>
+
+<script src="assets/cart.js"></script>
+<script>
+  (function () {
+    var navToggle = document.querySelector('.nav-toggle');
+    if (!navToggle) return;
+
+    navToggle.addEventListener('click', function () {
+      var isOpen = document.body.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Close the mobile menu when a nav link is clicked (better UX on navigation)
+    document.querySelectorAll('.main-nav a, .header-actions a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        document.body.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && document.body.classList.contains('nav-open')) {
+        document.body.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
