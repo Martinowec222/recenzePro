@@ -599,11 +599,16 @@
   }
   
   @media (max-width: 720px) {
-    .main-nav, .header-actions { display: none; }
+    .main-nav { display: none; }
     .nav-toggle { display: flex; }
     .hero-tiles, .steps, .trust-grid { grid-template-columns: 1fr; }
     .product-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
+
+    /* Cart stays visible in the header row itself, not tucked inside the
+       hamburger menu — people should see their cart count at a glance. */
+    .header-actions { display: flex; margin-left: auto; }
+    .header-actions .icon-link span:not(.cart-count) { display: none; }
 
     /* Hero image was fixed at min-height:320px, too tall on narrow phones */
     .hero-image { min-height: 0; aspect-ratio: 4 / 3; }
@@ -635,15 +640,6 @@
     body.nav-open .main-nav a {
       display: block;
       padding: 10px 4px;
-    }
-    body.nav-open .header-actions {
-      display: flex;
-      order: 4;
-      width: 100%;
-      padding-bottom: 14px;
-      border-top: 1px solid var(--line);
-      margin-top: 4px;
-      padding-top: 12px;
     }
     .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
     .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
