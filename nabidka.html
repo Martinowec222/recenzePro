@@ -438,12 +438,17 @@
   }
 
   @media (max-width: 720px) {
-    .main-nav, .header-actions { display: none; }
+    .main-nav { display: none; }
     .nav-toggle { display: flex; }
     .trust-grid { grid-template-columns: 1fr; }
     .product-grid { grid-template-columns: 1fr; }
     .product-grid--catalog { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
+
+    /* Cart stays visible in the header row itself, not tucked inside the
+       hamburger menu — people should see their cart count at a glance. */
+    .header-actions { display: flex; margin-left: auto; }
+    .header-actions .icon-link span:not(.cart-count) { display: none; }
   }
 
   /* Mobile nav — open state (JS toggles body.nav-open) */
@@ -463,15 +468,6 @@
       display: block;
       padding: 10px 4px;
     }
-    body.nav-open .header-actions {
-      display: flex;
-      order: 4;
-      width: 100%;
-      padding-bottom: 14px;
-      border-top: 1px solid var(--line);
-      margin-top: 4px;
-      padding-top: 12px;
-    }
     .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
     .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
     .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
@@ -485,11 +481,11 @@
 <!-- ============ HEADER ============ -->
 <header class="site-header">
   <div class="container header-inner">
-    <a href="index.html" class="logo">recenze<span>Pro</span></a>
+    <a href="main.html" class="logo">recenze<span>Pro</span></a>
 
     <nav class="main-nav" id="mainNav" aria-label="Hlavní navigace">
       <ul>
-        <li><a href="index.html">Domů</a></li>
+        <li><a href="main.html">Domů</a></li>
         <li><a href="nabidka.html" aria-current="page">Nabídka</a></li>
         <li><a href="blog.html">Blog</a></li>
         <li><a href="blog.html#post-2">O nás</a></li>
@@ -643,7 +639,7 @@
   <div class="container footer-grid">
 
     <div class="footer-col footer-brand">
-      <a href="index.html" class="logo logo--footer">recenze<span>Pro</span></a>
+      <a href="main.html" class="logo logo--footer">recenze<span>Pro</span></a>
       <p>Weby, SEO, Marketing a mnohem více...</p>
     </div>
 
