@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nabídka služeb — recenzePro.cz | Weby, e-shopy, SEO a NFC/QR kartičky</title>
+<meta name="description" content="Kompletní ceník a nabídka služeb recenzePro: tvorba info-webů a e-shopů, SEO optimalizace, firemní balíčky na míru i NFC/QR kartičky pro Google recenze.">
+<meta property="og:title" content="Nabídka služeb — recenzePro.cz">
+<meta property="og:description" content="Weby, e-shopy, SEO balíčky, firemní řešení i NFC/QR kartičky — vyberte si službu na míru nebo si sestavte vlastní balíček.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://www.recenzepro.cz/nabidka.html">
+<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+<link rel="alternate icon" href="favicon/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+<link rel="manifest" href="favicon/site.webmanifest">
+<meta name="theme-color" content="#1F3A2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* =========================================================
+   recenzePro.cz - design tokens
+   ========================================================= */
+  :root {
+    --bg: #F0F4EC;
+    --surface: #FFFFFF;
+    --ink: #1C2E22;
+    --ink-soft: #435049;
+    --forest: #1F3A2E;
+    --forest-dark: #142720;
+    --gold: #B8863B;
+    --gold-light: #E7C989;
+    --line: rgba(28, 46, 34, 0.12);
+
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+
+    --container: 1200px;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; display: block; }
+
+  .container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    color: var(--forest-dark);
+    line-height: 1.15;
+    margin: 0 0 0.5em;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  /* Placeholder blocks */
+  .placeholder-block {
+    background: repeating-linear-gradient(
+      135deg,
+      rgba(31,58,46,0.06),
+      rgba(31,58,46,0.06) 10px,
+      rgba(31,58,46,0.1) 10px,
+      rgba(31,58,46,0.1) 20px
+    );
+    border: 1px dashed rgba(31,58,46,0.35);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--forest);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    min-height: 120px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  /* "Pop up" hover efekt na dlaždicích s obrázky */
+  .mini-tile:hover,
+  .partner-logo:hover {
+    transform: scale(1.035) translateY(-3px);
+    box-shadow: 0 10px 24px rgba(28,46,34,0.18);
+  }
+  .product-card:hover .product-image {
+    transform: scale(1.035) translateY(-3px);
+    box-shadow: 0 10px 24px rgba(28,46,34,0.18);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1.5px solid transparent;
+    transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:disabled { opacity: 0.75; cursor: default; transform: none; }
+
+  .btn-primary {
+    background: var(--forest);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--forest-dark); }
+
+  .btn-ghost {
+    border-color: var(--forest);
+    color: var(--forest);
+  }
+  .btn-ghost:hover { background: var(--forest); color: #fff; }
+
+  .btn-outline {
+    border-color: var(--line);
+    color: var(--forest);
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: 100%;
+    justify-content: center;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* =========================================================
+     Header
+     ========================================================= */
+
+.hero-image img,
+.mini-tile img,
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+  display: block;
+}
+
+.partner-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* logos shouldn't get cropped like photos */
+  display: block;
+}
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--forest-dark);
+    white-space: nowrap;
+  }
+  .logo span { color: var(--gold); }
+
+  .main-nav { flex: 1; }
+  .main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+  }
+  .main-nav a {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .main-nav a:hover {
+    color: var(--forest);
+    background-color: rgba(31, 58, 46, 0.08);
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin: -4px -8px;
+  }
+  .main-nav a[aria-current="page"] {
+    color: var(--forest);
+    font-weight: 700;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .icon-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    position: relative;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .icon-link:hover {
+    color: var(--forest);
+    background-color: rgba(31, 58, 46, 0.08);
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin: -4px -8px;
+  }
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    left: 14px;
+    background: var(--gold);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+  }
+  .nav-toggle span {
+    width: 22px;
+    height: 2px;
+    background: var(--forest-dark);
+  }
+
+  /* =========================================================
+     Catalog page intro
+     ========================================================= */
+  .catalog-intro { padding: 56px 0 40px; text-align: center; }
+  .catalog-intro .eyebrow {
+    display: flex;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 14px;
+  }
+  .catalog-intro h1 { font-size: clamp(2rem, 3.5vw, 2.8rem); }
+  .catalog-intro p {
+    color: var(--ink-soft);
+    max-width: 60ch;
+    margin: 0 auto;
+    font-size: 1.05rem;
+  }
+
+  /* =========================================================
+     Catalog grid (4 per row)
+     ========================================================= */
+  .catalog { padding: 8px 0 72px; }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .product-grid--catalog {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .product-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
+  }
+  .product-image { aspect-ratio: 1 / 1; margin-bottom: 18px; }
+  .product-card h3 { font-size: 1.15rem; margin-bottom: 6px; }
+  .product-desc { color: var(--ink-soft); font-size: 0.92rem; margin: 0 0 14px; }
+  .price {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--forest);
+    margin: 0 0 16px;
+  }
+
+  .badge-mini {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: var(--gold);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 999px;
+    z-index: 1;
+  }
+
+  /* =========================================================
+     Marketing banner (full-width, under the catalog grid)
+     ========================================================= */
+  .marketing-banner {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--forest) 0%, var(--forest-dark) 100%);
+    border-radius: var(--radius);
+    padding: 36px 40px;
+    color: #fff;
+  }
+  .marketing-banner-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .marketing-copy .eyebrow-light {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin: 0 0 10px;
+  }
+  .marketing-copy h3 {
+    color: #fff;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+  }
+  .marketing-copy p {
+    color: rgba(255,255,255,0.75);
+    margin: 0;
+    max-width: 62ch;
+    font-size: 0.96rem;
+  }
+  .marketing-channels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .channel-btn {
+    padding: 11px 22px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    background: transparent;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+  .channel-btn:hover {
+    border-color: var(--gold-light);
+    color: var(--gold-light);
+    transform: translateY(-1px);
+  }
+  .channel-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #fff;
+  }
+  .marketing-other-row {
+    max-width: 360px;
+  }
+  .marketing-other-row input {
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 8px;
+    border: 1.5px solid rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font: inherit;
+  }
+  .marketing-other-row input::placeholder { color: rgba(255,255,255,0.55); }
+  .marketing-other-row input:focus {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 1px;
+    border-color: var(--gold-light);
+  }
+  .marketing-submit {
+    align-self: flex-start;
+    background: var(--gold);
+  }
+  .marketing-submit:hover { background: var(--gold-light); color: var(--forest-dark); }
+  .marketing-submit:disabled {
+    opacity: 0.5;
+    cursor: default;
+    transform: none;
+    background: var(--gold);
+  }
+
+  /* =========================================================
+     Trust bar
+     ========================================================= */
+  .trust-bar { padding: 48px 0 72px; }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    color: var(--forest);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  /* =========================================================
+     Footer
+     ========================================================= */
+  .site-footer {
+    background: var(--forest-dark);
+    color: rgba(255,255,255,0.85);
+    padding-top: 56px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 32px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .footer-brand p { color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 12px; }
+  .logo--footer { color: #fff; }
+  .logo--footer span { color: var(--gold-light); }
+
+  .footer-col h4 {
+    font-family: var(--font-body);
+    color: #fff;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+  .footer-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+  }
+  .footer-list a {
+    display: inline-block;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .footer-list a:hover {
+    color: var(--gold-light);
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin: -4px -8px;
+  }
+
+  .payment-icons { display: flex; flex-wrap: wrap; gap: 8px; }
+  .payment-chip {
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .footer-bottom {
+    padding: 20px 24px;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+  }
+
+  /* Offset anchor targets so the sticky header doesn't cover them */
+  #kontakt { scroll-margin-top: 100px; }
+
+  /* =========================================================
+     Responsive
+     ========================================================= */
+  @media (max-width: 960px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .product-grid--catalog { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 720px) {
+    .main-nav { display: none; }
+    .nav-toggle { display: flex; }
+    .trust-grid { grid-template-columns: 1fr; }
+    .product-grid { grid-template-columns: 1fr; }
+    .product-grid--catalog { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+
+    /* Cart stays visible in the header row itself, not tucked inside the
+       hamburger menu — people should see their cart count at a glance. */
+    .header-actions { display: flex; margin-left: auto; }
+    .header-actions .icon-link span:not(.cart-count) { display: none; }
+
+    .marketing-banner { padding: 28px 22px; }
+    .marketing-submit { align-self: stretch; justify-content: center; }
+  }
+
+  /* Mobile nav — open state (JS toggles body.nav-open) */
+  @media (max-width: 720px) {
+    body.nav-open .header-inner { flex-wrap: wrap; }
+    body.nav-open .main-nav {
+      display: block;
+      order: 3;
+      width: 100%;
+    }
+    body.nav-open .main-nav ul {
+      flex-direction: column;
+      gap: 2px;
+      padding: 12px 0 4px;
+    }
+    body.nav-open .main-nav a {
+      display: block;
+      padding: 10px 4px;
+    }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .nav-toggle span { transition: transform 0.15s ease, opacity 0.15s ease; }
+  }
+</style>
+
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">recenze<span>Pro</span></a>
+
+    <nav class="main-nav" id="mainNav" aria-label="Hlavní navigace">
+      <ul>
+        <li><a href="index.html">Domů</a></li>
+        <li><a href="nabidka.html" aria-current="page">Nabídka</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="blog.html#post-2">O nás</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="kosik.html" class="icon-link cart-link" aria-label="Košík">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 4h2l1.8 11.2a2 2 0 0 0 2 1.8h8.4a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9.5" cy="20" r="1.1"/><circle cx="17" cy="20" r="1.1"/></svg>
+        <span>Košík</span>
+        <span class="cart-count">0</span>
+      </a>
+    </div>
+
+    <button class="nav-toggle" aria-label="Otevřít menu" aria-expanded="false" aria-controls="mainNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ CATALOG INTRO ============ -->
+  <section class="catalog-intro">
+    <div class="container">
+      <p class="eyebrow">Kompletní nabídka</p>
+      <h1>Weby, SEO, Google recenze a další...</h1>
+      <p>Vyberte si službu kterou potřebujete, nebo si rovnou sestavte balíček.</p>
+    </div>
+  </section>
+
+  <!-- ============ CATALOG GRID (4 per row) ============ -->
+  <section class="catalog">
+    <div class="container">
+      <div class="product-grid product-grid--catalog">
+
+        <article class="product-card" data-name="Tvorba Info-Webu" data-info="Doba dodání: 7-10 dní">
+          <span class="badge-mini">Bestseller</span>
+          <div class="product-image">
+    	    <img loading="lazy" src="static/infoweb.png" alt="Ukázka Info-Webu na notebooku">
+          </div>
+          <h3>Tvorba Info-Webu</h3>
+          <p class="product-desc">Elegantní, rychlý a přehledný web poskytující důležité informace o Vaší firmě.</p>
+          <p class="price">Doba dodání: 7-10 dní</p>
+          <button type="button" class="btn btn-outline js-add-to-cart">Přidat do košíku</button>
+        </article>
+
+        <article class="product-card" data-name="SEO Optimalizace" data-info="Doba dodání: 5-7 dní">
+          <div class="product-image">
+    	    <img loading="lazy" src="static/seo.png" alt="Ukázka SEO na notebooku">
+          </div>          
+	  <h3>SEO Optimalizace</h3>
+          <p class="product-desc">Kompletní tvorba blogu a SEO struktur s klíčovými slovy pro Váš web.</p>
+          <p class="price">Doba dodání: 5-7 dní</p>
+          <button type="button" class="btn btn-outline js-add-to-cart">Přidat do košíku</button>
+        </article>
+
+        <article class="product-card" data-name="Kompletní E-Shop" data-info="Doba dodání: 10-14 dní">
+          <span class="badge-mini">Výhodné</span>
+          <div class="product-image">
+    	    <img loading="lazy" src="static/velkyweb.png" alt="Ukázka Velkého webu na notebooku">
+          </div>           
+	  <h3>Kompletní E-Shop</h3>
+          <p class="product-desc">Funkční a rychlý E-Shop s Vašimi produkty připravenými k prodeji.</p>
+          <p class="price">Doba dodání: 10-14 dní</p>
+          <button type="button" class="btn btn-outline js-add-to-cart">Přidat do košíku</button>
+        </article>
+
+        <article class="product-card" data-name="Google recenze kartička" data-info="od 450 Kč/kus">
+          <div class="product-image">
+    	    <img loading="lazy" src="static/karticka.png" alt="Ukázka kartičky s QR kodem a NFC čipem.">
+          </div>  
+          <h3>Google recenze kartička</h3>
+          <p class="product-desc">Originální kartička s QR kodem a NFC čipem pro více Google Reviews.</p>
+          <p class="price">od 450Kč/kus</p>
+          <button type="button" class="btn btn-outline js-add-to-cart">Přidat do košíku</button>
+        </article>
+
+        <article class="product-card" data-name="Balíček Info-Web + SEO" data-info="Doba dodání: 10-14 dní">
+          <div class="product-image">
+    	    <img loading="lazy" src="static/karta.png" alt="Ukázka business karty recenzePro">
+          </div>   
+          <h3>Balíček Info-Web + SEO</h3>
+          <p class="product-desc">Kvalitní a rychlý web s propracovaným SEO pro lepší zobrazení na Google.</p>
+          <p class="price">Doba dodání: 10-14 dní</p>
+          <button type="button" class="btn btn-outline js-add-to-cart">Přidat do košíku</button>
+        </article>
+
+        <article class="product-card" data-name="E-Shop + SEO" data-info="Doba dodání: 14-20 dní">
+          <div class="product-image">
+    	    <img loading="lazy" src="static/karta.png" alt="Ukázka business karty recenzePro">
+          </div>      
+          <h3>E-Shop + SEO</h3>
+          <p class="product-desc">Funkční E-Shop s propracovaným SEO pro lepší zobrazení na Google.</p>
+          <p class="price">Doba dodání: 14-20 dní</p>
+          <button type="button" class="btn btn-outline js-add-to-cart">Přidat do košíku</button>
+        </article>
+
+        <article class="product-card" data-name="Vlastní Mix" data-info="Doba dodání: 7-30 dní">
+          <div class="product-image">
+    	    <img loading="lazy" src="static/karta.png" alt="Ukázka business karty recenzePro">
+          </div>     
+          <h3>Vlastní Mix</h3>
+          <p class="product-desc">Speciální požadavky, individuální problémy a opravy webů. </p>
+          <p class="price">Doba dodání: 7-30 dní</p>
+          <button type="button" class="btn btn-outline js-add-to-cart">Přidat do košíku</button>
+        </article>
+
+        <article class="product-card" data-name="Velké firemní projekty" data-info="Doba dodání: 30 dní">
+          <span class="badge-mini">Pro firmy</span>
+          <div class="product-image">
+    	    <img loading="lazy" src="static/karta.png" alt="Ukázka business karty recenzePro">
+          </div>     
+          <h3>Velké firemní projekty</h3>
+          <p class="product-desc">Velké firemní weby, SEO na tisíce stran, AI automatizace a další...</p>
+          <p class="price">Doba dodání: 30 dní</p>
+          <button type="button" class="btn btn-outline js-add-to-cart">Přidat do košíku</button>
+        </article>
+
+        <!-- ============ MARKETING BANNER (full width) ============ -->
+        <div class="marketing-banner">
+          <div class="marketing-banner-inner">
+            <div class="marketing-copy">
+              <span class="eyebrow-light">Marketing na míru</span>
+              <h3>Chcete i správu sociálních sítí nebo e-mailing?</h3>
+              <p>Vyberte si kanály, o které máte zájem, přidáme je do vaší poptávky spolu s ostatními vybranými službami.</p>
+            </div>
+
+            <div class="marketing-channels" role="group" aria-label="Výběr marketingových kanálů">
+              <button type="button" class="channel-btn" data-channel="LinkedIn">LinkedIn</button>
+              <button type="button" class="channel-btn" data-channel="Facebook">Facebook</button>
+              <button type="button" class="channel-btn" data-channel="Instagram">Instagram</button>
+              <button type="button" class="channel-btn" data-channel="E-mailing">E-mailing</button>
+              <button type="button" class="channel-btn channel-btn--other" id="marketingOtherBtn">+ Jiný kanál</button>
+            </div>
+
+            <div class="marketing-other-row" id="marketingOtherRow" hidden>
+              <input type="text" id="marketingOtherInput" placeholder="Napište vlastní kanál (např. TikTok, YouTube...)">
+            </div>
+
+            <button type="button" class="btn btn-primary marketing-submit" id="marketingSubmit" disabled>Přidat vybrané do košíku</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRUST BAR ============ -->
+  <section class="trust-bar">
+    <div class="container trust-grid">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16v11H8l-4 4V5Z"/><path d="M8 10h8M8 13h5"/></svg>
+        <span>Nezávazná konzultace zdarma</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2h9l5 5v15H6V2Z"/><path d="M15 2v5h5"/><path d="M9 13h7M9 17h7M9 9h3"/></svg>
+        <span>Transparentní ceny, žádné poplatky navíc</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+        <span>Individuální přístup ke každému projektu</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 3.5 7v5c0 5 3.6 8.4 8.5 9 4.9-.6 8.5-4 8.5-9V7L12 3Z"/></svg>
+        <span>Podpora do 24 hodin</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+
+    <div class="footer-col footer-brand">
+      <a href="index.html" class="logo logo--footer">recenze<span>Pro</span></a>
+      <p>Weby, SEO, Marketing a mnohem více...</p>
+    </div>
+
+    <div class="footer-col" id="kontakt">
+      <h4>Kontakt</h4>
+      <ul class="footer-list">
+        <li><a href="mailto:recenzepro@email.cz">recenzepro@email.cz</a></li>
+        <li><a href="tel:+420777468522">+420 777 468 522</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Rychlé odkazy</h4>
+      <ul class="footer-list">
+        <li><a href="blog.html">Obchodní podmínky</a></li>
+        <li><a href="blog.html">Ochrana osobních údajů</a></li>
+        <li><a href="blog.html">Reklamace a vrácení</a></li>
+        <li><a href="blog.html">Kontakt</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Platební metody</h4>
+      <div class="payment-icons">
+        <span class="payment-chip">Karta</span>
+        <span class="payment-chip">Bankovní převod</span>
+        <span class="payment-chip">Apple Pay</span>
+        <span class="payment-chip">Google Pay</span>
+     	<span class="payment-chip">Bitcoin</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container footer-bottom">
+    <p>&copy; 2026 recenzePro.cz - Všechna práva vyhrazena.</p>
+  </div>
+</footer>
+
+<script src="assets/cart.js"></script>
+<script>
+  document.querySelectorAll('.js-add-to-cart').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var card = btn.closest('.product-card');
+      RecenzeProCart.addToCart({
+        name: card.getAttribute('data-name'),
+        info: card.getAttribute('data-info')
+      });
+      var original = btn.textContent;
+      btn.textContent = 'Přidáno ✓';
+      btn.disabled = true;
+      setTimeout(function () {
+        btn.textContent = original;
+        btn.disabled = false;
+      }, 1200);
+    });
+  });
+</script>
+
+<script>
+  (function () {
+    var channelBtns = document.querySelectorAll('.channel-btn:not(.channel-btn--other)');
+    var otherBtn = document.getElementById('marketingOtherBtn');
+    var otherRow = document.getElementById('marketingOtherRow');
+    var otherInput = document.getElementById('marketingOtherInput');
+    var submitBtn = document.getElementById('marketingSubmit');
+
+    if (!submitBtn) return;
+
+    var selected = new Set();
+
+    var channelInfo = {
+      'LinkedIn': 'Správa LinkedIn profilu a inzerce',
+      'Facebook': 'Správa Facebook stránky a inzerce',
+      'Instagram': 'Správa Instagramu a inzerce',
+      'E-mailing': 'Tvorba a rozesílka e-mailových kampaní'
+    };
+
+    function updateSubmitState() {
+      var hasOther = otherBtn.classList.contains('active') && otherInput.value.trim().length > 0;
+      submitBtn.disabled = !(selected.size > 0 || hasOther);
+    }
+
+    channelBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var channel = btn.getAttribute('data-channel');
+        btn.classList.toggle('active');
+        if (btn.classList.contains('active')) {
+          selected.add(channel);
+        } else {
+          selected.delete(channel);
+        }
+        updateSubmitState();
+      });
+    });
+
+    otherBtn.addEventListener('click', function () {
+      var isOpen = otherBtn.classList.toggle('active');
+      otherRow.hidden = !isOpen;
+      if (isOpen) {
+        otherInput.focus();
+      } else {
+        otherInput.value = '';
+      }
+      updateSubmitState();
+    });
+
+    otherInput.addEventListener('input', updateSubmitState);
+
+    submitBtn.addEventListener('click', function () {
+      selected.forEach(function (channel) {
+        RecenzeProCart.addToCart({
+          name: 'Marketing – ' + channel,
+          info: channelInfo[channel] || 'Marketingová služba'
+        });
+      });
+
+      var customChannel = otherInput.value.trim();
+      if (otherBtn.classList.contains('active') && customChannel) {
+        RecenzeProCart.addToCart({
+          name: 'Marketing – ' + customChannel,
+          info: 'Vlastní marketingový požadavek'
+        });
+      }
+
+      // reset selection UI after adding to cart
+      channelBtns.forEach(function (btn) { btn.classList.remove('active'); });
+      selected.clear();
+      otherBtn.classList.remove('active');
+      otherRow.hidden = true;
+      otherInput.value = '';
+
+      var originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Přidáno do košíku ✓';
+      submitBtn.disabled = true;
+      setTimeout(function () {
+        submitBtn.textContent = originalText;
+        updateSubmitState();
+      }, 1500);
+    });
+  })();
+</script>
+
+<script>
+  (function () {
+    var navToggle = document.querySelector('.nav-toggle');
+    if (!navToggle) return;
+
+    navToggle.addEventListener('click', function () {
+      var isOpen = document.body.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Close the mobile menu when a nav link is clicked (better UX on navigation)
+    document.querySelectorAll('.main-nav a, .header-actions a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        document.body.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && document.body.classList.contains('nav-open')) {
+        document.body.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
