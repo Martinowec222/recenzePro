@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Případová studie: MotoLocker — recenzePro.cz</title>
+<meta name="description" content="Jak recenzePro postavil e-shop na míru pro MotoLocker s více než 1 000 produkty motocyklového vybavení a náhradních dílů.">
+<meta property="og:title" content="Případová studie: MotoLocker — recenzePro.cz">
+<meta property="og:description" content="E-shop na míru s více než 1 000 produkty pro MotoLocker.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://recenzepro.cz/reference/motolocker.html">
+<link rel="icon" type="image/svg+xml" href="../favicon/favicon.svg">
+<link rel="alternate icon" href="../favicon/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+<link rel="manifest" href="../favicon/site.webmanifest">
+<meta name="theme-color" content="#1F3A2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #F0F4EC;
+    --surface: #FFFFFF;
+    --ink: #1C2E22;
+    --ink-soft: #435049;
+    --forest: #1F3A2E;
+    --forest-dark: #142720;
+    --gold: #B8863B;
+    --gold-light: #E7C989;
+    --line: rgba(28, 46, 34, 0.12);
+
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+
+    --container: 1200px;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; display: block; }
+
+  .container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    color: var(--forest-dark);
+    line-height: 1.15;
+    margin: 0 0 0.5em;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--forest); color: #fff; }
+  .btn-primary:hover { background: var(--forest-dark); }
+  .btn-ghost { border-color: var(--forest); color: var(--forest); }
+  .btn-ghost:hover { background: var(--forest); color: #fff; }
+
+  /* Header */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--forest-dark);
+    white-space: nowrap;
+  }
+  .logo span { color: var(--gold); }
+  .main-nav { flex: 1; }
+  .main-nav ul { list-style: none; display: flex; gap: 28px; margin: 0; padding: 0; }
+  .main-nav a {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .main-nav a:hover {
+    color: var(--forest);
+    background-color: rgba(31, 58, 46, 0.08);
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin: -4px -8px;
+  }
+  .main-nav a[aria-current="page"] { color: var(--forest); font-weight: 700; }
+  .header-actions { display: flex; align-items: center; gap: 22px; }
+  .icon-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    position: relative;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .icon-link:hover {
+    color: var(--forest);
+    background-color: rgba(31, 58, 46, 0.08);
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin: -4px -8px;
+  }
+  .cart-count {
+    position: absolute; top: -8px; left: 14px;
+    background: var(--gold); color: #fff;
+    font-size: 0.65rem; font-weight: 700;
+    min-width: 16px; height: 16px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-toggle {
+    display: none; flex-direction: column; gap: 4px;
+    background: none; border: none; cursor: pointer; padding: 6px;
+  }
+  .nav-toggle span { width: 22px; height: 2px; background: var(--forest-dark); }
+
+  /* Breadcrumb */
+  .breadcrumb { padding: 28px 0 0; font-size: 0.85rem; color: var(--ink-soft); }
+  .breadcrumb a { color: var(--forest); font-weight: 500; }
+  .breadcrumb a:hover { color: var(--gold); }
+
+  /* Article */
+  .article-wrap { padding: 20px 0 72px; }
+  .article-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin: 0 auto;
+    max-width: 760px;
+  }
+  .article-header { padding: 2rem 2.2rem 1.2rem; border-bottom: 1px solid var(--line); }
+  .post-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border-radius: 999px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+    background: rgba(184, 134, 59, 0.16);
+    color: var(--forest-dark);
+  }
+  .article-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 0.4rem;
+    color: var(--forest-dark);
+  }
+  .article-meta { font-size: 0.85rem; color: var(--ink-soft); margin: 0; }
+  .article-body { padding: 0 2.2rem 2.2rem; font-size: 1.05rem; line-height: 1.78; color: var(--ink); }
+  .article-body h3 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 1.8rem 0 0.6rem;
+    color: var(--forest-dark);
+  }
+  .article-body p { margin: 0 0 1rem; }
+  .article-body ul { margin: 0 0 1rem; padding-left: 1.2rem; }
+  .article-body li { margin-bottom: 0.4rem; }
+  .article-body a { color: var(--gold); font-weight: 600; text-decoration: underline; text-decoration-color: var(--line); }
+  .article-body a:hover { color: var(--light-gold); }
+
+  .article-cta {
+    margin-top: 2rem;
+    padding: 22px 26px;
+    background: rgba(31, 58, 46, 0.06);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .article-cta h3 { margin: 0 0 8px; }
+  .article-cta p { margin: 0 0 16px; }
+
+  .back-link { display: block; max-width: 760px; margin: 0 auto 18px; }
+
+  /* Footer */
+  .site-footer { background: var(--forest-dark); color: rgba(255,255,255,0.85); padding-top: 56px; }
+  .footer-grid {
+    display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 32px;
+    padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .footer-brand p { color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 12px; }
+  .logo--footer { color: #fff; }
+  .logo--footer span { color: var(--gold-light); }
+  .footer-col h4 {
+    font-family: var(--font-body); color: #fff; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;
+  }
+  .footer-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; color: rgba(255,255,255,0.75); }
+  .footer-list a { display: inline-block; transition: background-color 0.15s ease, color 0.15s ease; }
+  .footer-list a:hover { color: var(--gold-light); background-color: rgba(255,255,255,0.08); border-radius: 6px; padding: 4px 8px; margin: -4px -8px; }
+  .payment-icons { display: flex; flex-wrap: wrap; gap: 8px; }
+  .payment-chip { border: 1px solid rgba(255,255,255,0.25); border-radius: 6px; padding: 6px 10px; font-size: 0.75rem; color: rgba(255,255,255,0.8); }
+  .footer-bottom { padding: 20px 24px; font-size: 0.8rem; color: rgba(255,255,255,0.5); text-align: center; }
+  #kontakt { scroll-margin-top: 100px; }
+
+  @media (max-width: 960px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 720px) {
+    .main-nav { display: none; }
+    .nav-toggle { display: flex; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .header-actions { display: flex; margin-left: auto; }
+    .header-actions .icon-link span:not(.cart-count) { display: none; }
+    .article-header { padding: 1.6rem 1.4rem 1rem; }
+    .article-body { padding: 0 1.4rem 1.6rem; }
+  }
+  @media (max-width: 720px) {
+    body.nav-open .header-inner { flex-wrap: wrap; }
+    body.nav-open .main-nav { display: block; order: 3; width: 100%; }
+    body.nav-open .main-nav ul { flex-direction: column; gap: 2px; padding: 12px 0 4px; }
+    body.nav-open .main-nav a { display: block; padding: 10px 4px; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .nav-toggle span { transition: transform 0.15s ease, opacity 0.15s ease; }
+  }
+</style>
+
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">recenze<span>Pro</span></a>
+
+    <nav class="main-nav" id="mainNav" aria-label="Hlavní navigace">
+      <ul>
+        <li><a href="index.html">Domů</a></li>
+        <li><a href="nabidka.html">Nabídka</a></li>
+        <li><a href="reference.html">Reference</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="blog.html#post-2">O nás</a></li>
+        <li><a href="blog.html#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="https://go.recenzepro.cz" class="icon-link login-link" aria-label="Přihlášení">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M4 20c1.4-4 5-6 8-6s6.6 2 8 6"/></svg>
+        <span>Přihlášení</span>
+      </a>
+      
+      <a href="kosik.html" class="icon-link cart-link" aria-label="Košík">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 4h2l1.8 11.2a2 2 0 0 0 2 1.8h8.4a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="9.5" cy="20" r="1.1"/><circle cx="17" cy="20" r="1.1"/></svg>
+        <span>Košík</span>
+        <span class="cart-count">0</span>
+      </a>
+    </div>
+
+    <button class="nav-toggle" aria-label="Otevřít menu" aria-expanded="false" aria-controls="mainNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <div class="container breadcrumb">
+    <a href="reference.html">← Zpět na reference</a>
+  </div>
+
+  <section class="article-wrap">
+    <div class="container">
+
+      <article class="article-card" itemscope itemtype="https://schema.org/BlogPosting">
+        <meta itemprop="author" content="RecenzePro">
+        <meta itemprop="datePublished" content="2026-08-16">
+        <meta itemprop="dateModified" content="2026-08-16">
+
+        <div class="article-header">
+          <span class="post-tag">Případová studie</span>
+          <h1 class="article-title" itemprop="headline">E-shop na míru pro MotoLocker s více než 1 000 produkty</h1>
+          <p class="article-meta">Autor: RecenzePro &nbsp;–&nbsp; 16. srpna 2026 &nbsp;–&nbsp; 3 minuty čtení</p>
+        </div>
+
+        <div class="article-body" itemprop="articleBody">
+
+          <h3>O projektu</h3>
+          <p><strong><a href="https://motolocker.cz" target="_blank" rel="noopener noreferrer">MotoLocker</a></strong> je internetový obchod zaměřený na motocyklové vybavení, příslušenství a náhradní díly.</p>
+          <p>Pro jeho provozovatele jsme vytvořili kompletní e-shop na míru, který zákazníkům umožňuje pohodlně procházet rozsáhlý katalog a nakupovat z počítače i mobilního telefonu.</p>
+
+          <h3>Výchozí situace</h3>
+          <p>Klient potřeboval spolehlivé řešení pro prodej rozsáhlého sortimentu čítajícího více než 1 000 produktů. Důležitá byla především přehledná struktura kategorií, rychlé načítání, jednoduchý nákupní proces a možnost dalšího rozvoje e-shopu.</p>
+
+          <h3>Co jsme vytvořili</h3>
+          <ul>
+            <li>kompletní návrh a realizaci e-shopu,</li>
+            <li>strukturu kategorií pro více než 1 000 produktů,</li>
+            <li>responzivní zobrazení pro mobilní zařízení,</li>
+            <li>objednávkový proces včetně dopravy a plateb,</li>
+            <li>technické SEO a podklady pro indexaci ve vyhledávačích</li>
+          </ul>
+
+          <h3>Výsledek</h3>
+          <p>Výsledkem je plně funkční a připravený internetový obchod, který může přijímat objednávky a dále růst společně s podnikáním klienta. E-shop jsme úspěšně dokončili, otestovali a spustili.</p>
+
+          <div class="article-cta">
+            <h3>Plánujete vlastní e-shop?</h3>
+            <p>Navrhneme řešení podle vašeho sortimentu, zákazníků a obchodních cílů.</p>
+            <a href="kosik.html" class="btn btn-primary">Domluvte si nezávaznou konzultaci</a>
+          </div>
+
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+
+    <div class="footer-col footer-brand">
+      <a href="index.html" class="logo logo--footer">recenze<span>Pro</span></a>
+      <p>Weby, SEO, Marketing a mnohem více...</p>
+    </div>
+
+    <div class="footer-col" id="kontakt">
+      <h4>Kontakt</h4>
+      <ul class="footer-list">
+        <li><a href="mailto:recenzepro@email.cz">recenzepro@email.cz</a></li>
+        <li><a href="tel:+420777468522">+420 777 468 522</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Rychlé odkazy</h4>
+      <ul class="footer-list">
+        <li><a href="blog.html">Obchodní podmínky</a></li>
+        <li><a href="blog.html">Ochrana osobních údajů</a></li>
+        <li><a href="blog.html">Reklamace a vrácení</a></li>
+        <li><a href="blog.html">Kontakt</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Platební metody</h4>
+      <div class="payment-icons">
+        <span class="payment-chip">Karta</span>
+        <span class="payment-chip">Bankovní převod</span>
+        <span class="payment-chip">Apple Pay</span>
+        <span class="payment-chip">Google Pay</span>
+     	<span class="payment-chip">Bitcoin</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container footer-bottom">
+    <p>&copy; 2026 recenzePro.cz - Všechna práva vyhrazena.</p>
+  </div>
+</footer>
+
+<script src="../assets/cart.js"></script>
+<script>
+  (function () {
+    var navToggle = document.querySelector('.nav-toggle');
+    if (!navToggle) return;
+
+    navToggle.addEventListener('click', function () {
+      var isOpen = document.body.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    document.querySelectorAll('.main-nav a, .header-actions a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        document.body.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && document.body.classList.contains('nav-open')) {
+        document.body.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
