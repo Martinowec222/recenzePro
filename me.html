@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Martin Chrostek — recenzePro.cz</title>
+<meta name="description" content="Martin Chrostek, zakladatel recenzePro. Kontakt, telefon, e-mail a uložení vizitky na jedno klepnutí.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://recenzepro.cz/me.html">
+<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+<link rel="alternate icon" href="favicon/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+<link rel="manifest" href="favicon/site.webmanifest">
+<meta name="theme-color" content="#1F3A2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #F0F4EC;
+    --surface: #FFFFFF;
+    --ink: #1C2E22;
+    --ink-soft: #435049;
+    --forest: #1F3A2E;
+    --forest-dark: #142720;
+    --gold: #B8863B;
+    --gold-light: #E7C989;
+    --line: rgba(28, 46, 34, 0.12);
+
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --radius: 18px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    padding: 32px 18px 56px;
+  }
+
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  /* ---------- Photo + identity ---------- */
+  .portrait-wrap {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: var(--forest-dark);
+    box-shadow: 0 14px 30px rgba(28,46,34,0.18);
+  }
+  .portrait-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+  }
+  .portrait-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(20,39,32,0) 50%, rgba(20,39,32,0.82) 100%);
+  }
+  .portrait-caption {
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    bottom: 20px;
+    color: #fff;
+  }
+  .portrait-caption .name {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin: 0 0 2px;
+  }
+  .portrait-caption .role {
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.82);
+    margin: 0;
+  }
+  .portrait-caption .role span { color: var(--gold-light); }
+
+  /* ---------- Intro ---------- */
+  .intro {
+    margin-top: 22px;
+    color: var(--ink-soft);
+    font-size: 1rem;
+  }
+  .intro p { margin: 0; }
+
+  /* ---------- Contact actions ---------- */
+  .actions {
+    margin-top: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .action-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 15px 18px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: var(--surface);
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.98rem;
+    color: var(--forest-dark);
+    cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  .action-btn:hover { transform: translateY(-1px); border-color: var(--gold); }
+  .action-btn svg { flex-shrink: 0; color: var(--forest); }
+  .action-btn .label-sub {
+    display: block;
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    margin-top: 1px;
+  }
+
+  .action-btn--primary {
+    background: var(--forest);
+    border-color: var(--forest);
+    color: #fff;
+  }
+  .action-btn--primary svg { color: var(--gold-light); }
+  .action-btn--primary:hover { background: var(--forest-dark); }
+  .action-btn--primary .label-sub { color: rgba(255,255,255,0.7); }
+
+  .action-btn:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+  /* ---------- Site link ---------- */
+  .site-link {
+    margin-top: 26px;
+    text-align: center;
+    padding: 18px;
+    border-radius: var(--radius);
+    background: rgba(31, 58, 46, 0.06);
+    border: 1px solid var(--line);
+  }
+  .site-link p {
+    margin: 0 0 10px;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+  }
+  .site-link a.brand {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--forest-dark);
+  }
+  .site-link a.brand span { color: var(--gold); }
+
+  /* ---------- Footer ---------- */
+  .card-footer {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <div class="portrait-wrap">
+    <img src="static/martin.jpg" alt="Martin Chrostek">
+    <div class="portrait-gradient" aria-hidden="true"></div>
+    <div class="portrait-caption">
+      <p class="name">Martin Chrostek</p>
+      <p class="role">Zakladatel, <span>recenzePro</span></p>
+    </div>
+  </div>
+
+  <div class="intro">
+    <p>Stojím za recenzePro, s týmem stavíme weby, e-shopy, SEO a Google recenzní kartičky pro menší a střední firmy v Česku. Pokud řešíte web, marketing nebo online reputaci, ozvěte se, rád to proberu osobně.</p>
+  </div>
+
+  <div class="actions">
+    <a class="action-btn action-btn--primary" href="tel:+420777468522">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1v3.6c0 .6-.4 1-1 1C10.4 21.2 2.8 13.6 2.8 4.7c0-.6.4-1 1-1h3.6c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.2 1.1L6.6 10.8Z"/></svg>
+      <span>
+        Zavolat
+        <span class="label-sub">+420 777 468 522</span>
+      </span>
+    </a>
+
+    <a class="action-btn" href="mailto:recenzepro@email.cz">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16v14H4V5Z"/><path d="m4 6 8 7 8-7"/></svg>
+      <span>
+        Napsat e-mail
+        <span class="label-sub">recenzepro@email.cz</span>
+      </span>
+    </a>
+
+    <button type="button" class="action-btn" id="saveContactBtn">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v13"/><path d="m7 12 5 5 5-5"/><path d="M5 21h14"/></svg>
+      <span>
+        Uložit kontakt
+        <span class="label-sub">Stáhne se jako vizitka do telefonu</span>
+      </span>
+    </button>
+  </div>
+
+  <div class="site-link">
+    <p>Chcete vědět víc o tom, co děláme?</p>
+    <a href="https://www.recenzepro.cz" class="brand">recenze<span>Pro</span>.cz</a>
+  </div>
+
+  <p class="card-footer">&copy; 2026 recenzePro.cz</p>
+
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('saveContactBtn');
+    if (!btn) return;
+
+    btn.addEventListener('click', function () {
+      var vcard = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'N:Chrostek;Martin;;;',
+        'FN:Martin Chrostek',
+        'ORG:recenzePro',
+        'TITLE:Zakladatel',
+        'TEL;TYPE=CELL,VOICE:+420777468522',
+        'EMAIL;TYPE=WORK:recenzepro@email.cz',
+        'EMAIL;TYPE=HOME:martinchrostek@gmail.com',
+        'URL:https://recenzepro.cz',
+        'END:VCARD'
+      ].join('\r\n');
+
+      var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = url;
+      link.download = 'martin-chrostek-recenzepro.vcf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      var original = btn.querySelector('span').innerHTML;
+      btn.querySelector('span').innerHTML = 'Vizitka uložena ✓<span class="label-sub">Zkontrolujte stažené soubory</span>';
+      btn.disabled = true;
+      setTimeout(function () {
+        btn.querySelector('span').innerHTML = original;
+        btn.disabled = false;
+      }, 2000);
+    });
+  })();
+</script>
+
+</body>
+</html>
